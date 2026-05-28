@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { useClerk, useUser, useAuth } from '@clerk/nextjs'
+import { useClerk, useUser, useAuth } from '@clerk/clerk-react'
 import { useRouter } from 'next/navigation'
 import { healthCheck, verifyToken, getUserProfile } from '@/lib/api'
 

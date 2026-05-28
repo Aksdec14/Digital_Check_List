@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useUser, useClerk } from '@clerk/nextjs'
+import { useUser, useClerk } from '@clerk/clerk-react'
 import { useRouter } from 'next/navigation'
 
 export default function ClickDontPrint() {

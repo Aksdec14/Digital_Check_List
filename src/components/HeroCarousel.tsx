@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { useClerk, useUser } from '@clerk/nextjs'
+import { useClerk, useUser } from '@clerk/clerk-react'
 import { useRouter } from 'next/navigation'
 
 interface CardItem {
