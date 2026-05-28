@@ -4,10 +4,7 @@ import { ClerkProvider } from '@clerk/clerk-react'
 import TimedPopup from '@/components/TimedPopup'
 import './globals.css'
 
-const CLERK_PUBLISHABLE_KEY =
-  'pk_test_' +
-  'bmVlZGVkLWxhZHlidWctMTUu' +
-  'Y2xlcmsuYWNjb3VudHMuZGV2JA'
+const CLERK_PUBLISHABLE_KEY = "pk_test_bW9yZS1zaGVlcC04MS5jbGVyay5hY2NvdW50cy5kZXYk"
 
 export default function RootLayout({
   children,
