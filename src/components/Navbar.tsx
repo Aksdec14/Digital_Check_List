@@ -2,17 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { useClerk, useUser, useAuth } from '@clerk/clerk-react'
 import { useRouter } from 'next/navigation'
-import { healthCheck, verifyToken, getUserProfile } from '@/lib/api'
+import { useAuth } from '@/lib/auth-context'
+import { healthCheck } from '@/lib/api'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [backendAlive, setBackendAlive] = useState(false)
-  const [profile, setProfile] = useState<{ name?: string; email: string } | null>(null)
-  const { openSignIn } = useClerk()
-  const { isSignedIn } = useUser()
-  const { getToken } = useAuth()
+  const { user } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
@@ -20,21 +17,6 @@ export default function Navbar() {
       .then(() => setBackendAlive(true))
       .catch(() => setBackendAlive(false))
   }, [])
-
-  useEffect(() => {
-    if (!isSignedIn) {
-      setProfile(null)
-      return
-    }
-    getToken().then((token) => {
-      if (!token) return
-      verifyToken(token).then((res) => {
-        if (res.valid) {
-          getUserProfile(token).then(setProfile).catch(() => {})
-        }
-      }).catch(() => {})
-    })
-  }, [isSignedIn, getToken])
 
   const toggle = () => {
     setOpen((v) => !v)
@@ -65,8 +47,8 @@ export default function Navbar() {
         <li><a href="#contact" onClick={close}>Contact</a></li>
       </ul>
       <div className="nav-right">
-        {profile && <span className="user-greeting">Hi, {profile.name || profile.email}</span>}
-        <button className="nav-cta" onClick={() => isSignedIn ? router.push('/already-signed-up') : openSignIn()}>Get a Free Demo</button>
+        {user && <span className="user-greeting">Hi, {user.email}</span>}
+        <button className="nav-cta" onClick={() => user ? router.push('/already-signed-up') : router.push('/sign-in')}>Get a Free Demo</button>
         <button
           className={`hamburger${open ? ' active' : ''}`}
           onClick={toggle}

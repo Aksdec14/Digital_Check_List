@@ -1,10 +1,6 @@
-'use client'
-
-import { ClerkProvider } from '@clerk/clerk-react'
+import Providers from '@/lib/providers'
 import TimedPopup from '@/components/TimedPopup'
 import './globals.css'
-
-const CLERK_PUBLISHABLE_KEY = "pk_live_Y2xlcmsuZGlnaXRhbGNoZWNrbGlzdC5mdXNpb25lZGdlLmlvJA"
 
 export default function RootLayout({
   children,
@@ -12,21 +8,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
-      <html lang="en" data-scroll-behavior="smooth">
-        <head>
-          <title>FusionEdge – Digital Checklists</title>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
-            rel="stylesheet"
-          />
-          <link rel="icon" href="/fe_logo.png" />
-        </head>
-        <body>
+    <html lang="en" data-scroll-behavior="smooth">
+      <head>
+        <title>FusionEdge – Digital Checklists</title>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+        <link rel="icon" href="/fe_logo.png" />
+      </head>
+      <body>
+        <Providers>
           {children}
           <TimedPopup />
-        </body>
-      </html>
-    </ClerkProvider>
+        </Providers>
+      </body>
+    </html>
   )
 }

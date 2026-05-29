@@ -1,37 +1,36 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useClerk, useUser } from '@clerk/clerk-react'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/lib/auth-context'
 
 export default function TimedPopup() {
   const [show, setShow] = useState(false)
-  const { openSignIn } = useClerk()
-  const { isSignedIn } = useUser()
+  const { user } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
-    if (isSignedIn) return
+    if (user) return
 
     const timer = setTimeout(() => {
       setShow(true)
     }, 30000)
 
     return () => clearTimeout(timer)
-  }, [isSignedIn])
+  }, [user])
 
   useEffect(() => {
     if (!show) return
 
     const idleTimer = setTimeout(() => {
-      openSignIn()
+      router.push('/sign-in')
       setShow(false)
     }, 5000)
 
     return () => clearTimeout(idleTimer)
-  }, [show, openSignIn])
+  }, [show, router])
 
-  if (!show || isSignedIn) return null
+  if (!show || user) return null
 
   return (
     <div className="fixed bottom-6 right-6 z-50 max-w-sm rounded-2xl bg-white p-6 shadow-2xl border border-gray-100">
@@ -50,7 +49,7 @@ export default function TimedPopup() {
       </p>
       <button
         onClick={() => {
-          isSignedIn ? router.push('/already-signed-up') : openSignIn()
+          user ? router.push('/already-signed-up') : router.push('/sign-in')
           setShow(false)
         }}
         className="w-full rounded-lg bg-[#1e3a6b] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#16304f] transition-colors"

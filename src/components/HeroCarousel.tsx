@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { useClerk, useUser } from '@clerk/clerk-react'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/lib/auth-context'
 
 interface CardItem {
   col: number
@@ -31,26 +31,8 @@ const CARDS: CardItem[] = [
     items: [['Waste disposal', 't'], ['Energy readings', 't'], ['Water quality', 't'], ['Air filtration', 't'], ['Sustainability log', 't']] },
 ]
 
-function CheckCard({ card }: { card: CardItem }) {
-  return (
-    <div className={`check-card ${card.cls}`}>
-      <div className="card-head">
-        <span className="card-emoji">{card.emoji}</span>
-        <span className="card-name">{card.name}</span>
-      </div>
-      {card.items.map(([label, color], i) => (
-        <div className="ci" key={i}>
-          <span className={`tk ${color}`}>✓</span>
-          {label}
-        </div>
-      ))}
-    </div>
-  )
-}
-
 export default function HeroCarousel() {
-  const { openSignIn } = useClerk()
-  const { isSignedIn } = useUser()
+  const { user } = useAuth()
   const router = useRouter()
   const col1Ref = useRef<HTMLDivElement>(null)
   const col2Ref = useRef<HTMLDivElement>(null)
@@ -120,7 +102,7 @@ export default function HeroCarousel() {
           replaces paper, Excel, and disconnected tools with one unified system.
         </p>
         <div className="hero-ctas">
-          <button className="btn-primary" onClick={() => isSignedIn ? router.push('/already-signed-up') : openSignIn()}>Get a Free Demo</button>
+          <button className="btn-primary" onClick={() => user ? router.push('/already-signed-up') : router.push('/sign-in')}>Get a Free Demo</button>
           <button className="btn-secondary" onClick={() => window.location.href = '#contact'}>Contact Us →</button>
         </div>
       </div>

@@ -1,12 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import { useUser, useClerk } from '@clerk/clerk-react'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/lib/auth-context'
 
 export default function ClickDontPrint() {
-  const { isSignedIn } = useUser()
-  const { openSignIn } = useClerk()
+  const { user } = useAuth()
   const router = useRouter()
   return (
     <section className="banner-wrapper">
@@ -35,7 +34,7 @@ export default function ClickDontPrint() {
               <span className="cdp-chip chip-green">3 Months Free Access</span>
             </div>
             <div className="cdp-cta">
-              <button className="cdp-btn" onClick={() => isSignedIn ? router.push('/already-signed-up') : openSignIn()}>Claim Your Free Slot</button>
+              <button className="cdp-btn" onClick={() => user ? router.push('/already-signed-up') : router.push('/sign-in')}>Claim Your Free Slot</button>
               <span className="cdp-note">No credit card · Live in days</span>
             </div>
           </div>
