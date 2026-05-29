@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth-context'
-import { healthCheck } from '@/lib/api'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -12,11 +11,6 @@ export default function Navbar() {
   const { user } = useAuth()
   const router = useRouter()
 
-  useEffect(() => {
-    healthCheck()
-      .then(() => setBackendAlive(true))
-      .catch(() => setBackendAlive(false))
-  }, [])
 
   const toggle = () => {
     setOpen((v) => !v)
@@ -36,7 +30,7 @@ export default function Navbar() {
           height={40}
           loading="eager"
         />
-        {backendAlive && <span className="backend-badge">Live</span>}
+
       </div>
       <ul className={`nav-links${open ? ' active' : ''}`} id="navLinks">
         <li><a href="#platform" onClick={close}>Platform</a></li>
@@ -47,8 +41,11 @@ export default function Navbar() {
         <li><a href="#contact" onClick={close}>Contact</a></li>
       </ul>
       <div className="nav-right">
-        {user && <span className="user-greeting">Hi, {user.email}</span>}
-        <button className="nav-cta" onClick={() => user ? router.push('/already-signed-up') : router.push('/sign-in')}>Get a Free Demo</button>
+        {user ? (
+          <span className="user-greeting">Hi, {user.email}</span>
+        ) : (
+          <button className="nav-cta" onClick={() => router.push('/sign-up')}>Get a Free Demo</button>
+        )}
         <button
           className={`hamburger${open ? ' active' : ''}`}
           onClick={toggle}
