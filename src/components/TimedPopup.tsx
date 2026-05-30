@@ -1,13 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth-context'
 
 export default function TimedPopup() {
   const [show, setShow] = useState(false)
   const { user } = useAuth()
-  const router = useRouter()
 
   useEffect(() => {
     if (user) return
@@ -19,16 +17,7 @@ export default function TimedPopup() {
     return () => clearTimeout(timer)
   }, [user])
 
-  useEffect(() => {
-    if (!show) return
 
-    const idleTimer = setTimeout(() => {
-      router.push('/sign-in')
-      setShow(false)
-    }, 5000)
-
-    return () => clearTimeout(idleTimer)
-  }, [show, router])
 
   if (!show || user) return null
 
@@ -48,10 +37,7 @@ export default function TimedPopup() {
         See how digital checklists can transform your operations
       </p>
       <button
-        onClick={() => {
-          user ? router.push('/already-signed-up') : router.push('/sign-in')
-          setShow(false)
-        }}
+        onClick={() => setShow(false)}
         className="w-full rounded-lg bg-[#1e3a6b] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#16304f] transition-colors"
       >
         Get a Free Demo

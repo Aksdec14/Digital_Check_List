@@ -10,6 +10,7 @@ const LOGO_SRC = '/FusionEdge_logo.png'
 
 export default function SignUpPage() {
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -28,12 +29,15 @@ export default function SignUpPage() {
       setError('Passwords do not match.')
       return
     }
+    if (!phone.trim()) {
+      setError('Phone number is required.')
+      return
+    }
     if (!supabase) return
-    const { data, error } = await supabase.auth.signUp({ email, password })
+    const { data, error } = await supabase.auth.signUp({ email, password, options: { data: { phone } } })
     if (error) { setError(error.message); return }
     if (data.session) { router.push('/'); return }
     setSuccess(true)
-    setTimeout(() => router.push('/sign-in'), 2000)
   }
 
   return (
@@ -212,6 +216,32 @@ export default function SignUpPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@company.com"
+                required
+                style={{
+                  width: '100%',
+                  height: 40,
+                  padding: '0 12px',
+                  borderRadius: 8,
+                  border: '1px solid #ebebeb',
+                  background: '#fafafa',
+                  fontSize: 13,
+                  color: '#111',
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#444', marginBottom: 6 }}>
+                Phone <span style={{ color: '#dc2626' }}>*</span>
+              </label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+1 (555) 123-4567"
                 required
                 style={{
                   width: '100%',
