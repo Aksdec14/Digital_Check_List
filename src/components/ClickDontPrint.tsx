@@ -26,9 +26,9 @@ export default function ClickDontPrint() {
 
         .cdp-card {
           background-color: #f8f6f3;
-          background-image: url('/image.png');
+          background-image: url('/trees.png');
           background-repeat: no-repeat;
-          background-position: top right;
+          background-position: bottom right;
           background-size: 55% auto;
           padding: 24px 32px;
           width: 100%;
