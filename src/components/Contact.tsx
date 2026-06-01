@@ -36,7 +36,7 @@ export default function Contact() {
                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                   </svg>
                 </div>
-                <span className="contact-info-text">info@fusionedge.com</span>
+                <span className="contact-info-text">rana@fusionedge.io</span>
               </div>
               <div className="contact-info-row">
                 <div className="contact-info-icon">
