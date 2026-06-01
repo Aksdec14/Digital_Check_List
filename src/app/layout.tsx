@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import Providers from '@/lib/providers'
-import TimedPopup from '@/components/TimedPopup'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -131,7 +130,7 @@ export default function RootLayout({
       <body>
         <Providers>
           {children}
-          <TimedPopup />
+
         </Providers>
       </body>
     </html>
