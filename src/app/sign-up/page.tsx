@@ -34,7 +34,14 @@ export default function SignUpPage() {
       return
     }
     if (!supabase) return
-    const { data, error } = await supabase.auth.signUp({ email, password, options: { data: { phone } } })
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { phone },
+        emailRedirectTo: `${window.location.origin}/auth/confirmed`,
+      },
+    })
     if (error) { setError(error.message); return }
     if (data.session) { router.push('/'); return }
     setSuccess(true)

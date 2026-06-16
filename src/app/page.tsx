@@ -17,7 +17,7 @@ export default function Home() {
       <Navbar />
       <HeroCarousel />
       <TrustBar />
-      <ClickDontPrint />
+      {/* <ClickDontPrint /> */}
       <WhyDigitalChecklists />
       <EverythingIncluded />
       <ConnectedNotIsolated />
